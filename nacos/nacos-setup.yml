@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nacos:
+    container_name: nacos-server-2.1.1
+    image: nacos/nacos-server:v2.1.1
+    environment:
+      - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=192.168.123.129
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVER_DB_PARAM=characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true&&connectTimeout=10000&socketTimeout=30000
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+
+    volumes:
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    networks:
+      - default
+#    network_mode: host
+    privileged: true
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+#    network_mode: host
